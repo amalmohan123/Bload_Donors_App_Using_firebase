@@ -2,14 +2,14 @@ import 'package:bload_groups/core/constance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AddUser extends StatefulWidget {
-  const AddUser({super.key});
+class UpdateUser extends StatefulWidget {
+  const UpdateUser({super.key});
 
   @override
-  State<AddUser> createState() => _AddUserState();
+  State<UpdateUser> createState() => _UpdateUserState();
 }
 
-class _AddUserState extends State<AddUser> {
+class _UpdateUserState extends State<UpdateUser> {
   final bloodGroups = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
 
   String? selectedGroups;
@@ -18,21 +18,28 @@ class _AddUserState extends State<AddUser> {
 
   TextEditingController donorName = TextEditingController();
   TextEditingController donorPhone = TextEditingController();
-  void addDonor() {
-    final add = {
+
+  void updateDonor(docid) {
+    final data = {
       'name': donorName.text,
       'phone': donorPhone.text,
-      'group': selectedGroups,
+      'group': selectedGroups
     };
-    donor.add(add);
+    donor.doc(docid).update(data);
   }
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    donorName.text = args['name'];
+    donorPhone.text = args['phone'];
+    selectedGroups = args['group'];
+    final docId = args['id'];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Donor',
+          'Edit Details',
           style: TextStyle(
             color: whiteColor,
             fontWeight: bold,
@@ -69,6 +76,7 @@ class _AddUserState extends State<AddUser> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: DropdownButtonFormField(
+                value: selectedGroups,
                 decoration: const InputDecoration(
                   label: Text('Select Blood Group'),
                 ),
@@ -89,7 +97,7 @@ class _AddUserState extends State<AddUser> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  addDonor();
+                  updateDonor(docId);
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
@@ -99,7 +107,7 @@ class _AddUserState extends State<AddUser> {
                   ),
                 ),
                 child: const Text(
-                  'Submit',
+                  'Update',
                   style: TextStyle(
                       color: whiteColor, fontWeight: bold, fontSize: 18),
                 ),

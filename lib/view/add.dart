@@ -20,7 +20,8 @@ class _AddUserState extends State<AddUser> {
 
   TextEditingController donorName = TextEditingController();
   TextEditingController donorPhone = TextEditingController();
-  Future addDonor()async {
+
+  Future addDonor() async {
     final add = {
       'name': donorName.text,
       'phone': donorPhone.text,
@@ -91,11 +92,11 @@ class _AddUserState extends State<AddUser> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: ()async {
-                await  addDonor();
-                 await   Provider.of<DonorProvider>(context ,listen: false).reloading();
+                onPressed: () async {
+                  await addDonor();
+                  await Provider.of<DonorProvider>(context, listen: false)
+                      .reloading();
                   Navigator.pop(context);
-
                 },
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(blueAccent),

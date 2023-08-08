@@ -64,14 +64,15 @@ class HomePage extends StatelessWidget {
                       child: Container(
                         height: 80,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: whiteColor,
-                            boxShadow: const [
-                              BoxShadow(
-                                  color: Color.fromARGB(66, 72, 69, 69),
-                                  blurRadius: 10,
-                                  spreadRadius: 8)
-                            ]),
+                          borderRadius: BorderRadius.circular(30),
+                          color: whiteColor,
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Color.fromARGB(66, 72, 69, 69),
+                                blurRadius: 10,
+                                spreadRadius: 8)
+                          ],
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -104,7 +105,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 Text(
                                   donorSnap['phone'].toString(),
-                                  style: TextStyle(fontSize: 18),
+                                  style: const TextStyle(fontSize: 18),
                                 ),
                               ],
                             ),
@@ -172,5 +173,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-

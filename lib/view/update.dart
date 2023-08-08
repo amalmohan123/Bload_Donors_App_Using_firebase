@@ -1,6 +1,8 @@
 import 'package:bload_groups/core/constance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/home_page_prov.dart';
 
 class UpdateUser extends StatefulWidget {
   const UpdateUser({super.key});
@@ -96,8 +98,10 @@ class _UpdateUserState extends State<UpdateUser> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: ()async {
                   updateDonor(docId);
+                   await Provider.of<DonorProvider>(context, listen: false)
+                      .reloading();
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(

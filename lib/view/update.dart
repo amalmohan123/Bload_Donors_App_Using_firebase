@@ -45,7 +45,7 @@ class _UpdateUserState extends State<UpdateUser> {
             fontWeight: bold,
           ),
         ),
-        backgroundColor: redColor,
+        backgroundColor: blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -101,7 +101,7 @@ class _UpdateUserState extends State<UpdateUser> {
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(redColor),
+                  backgroundColor: MaterialStatePropertyAll(blueAccent),
                   minimumSize: MaterialStatePropertyAll(
                     Size(double.infinity, 45),
                   ),

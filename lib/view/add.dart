@@ -40,7 +40,7 @@ class _AddUserState extends State<AddUser> {
             fontWeight: bold,
           ),
         ),
-        backgroundColor: redColor,
+        backgroundColor: blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -98,7 +98,7 @@ class _AddUserState extends State<AddUser> {
 
                 },
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(redColor),
+                  backgroundColor: MaterialStatePropertyAll(blueAccent),
                   minimumSize: MaterialStatePropertyAll(
                     Size(double.infinity, 45),
                   ),

@@ -1,6 +1,8 @@
 import 'package:bload_groups/core/constance.dart';
+import 'package:bload_groups/provider/home_page_prov.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddUser extends StatefulWidget {
   const AddUser({super.key});
@@ -18,7 +20,7 @@ class _AddUserState extends State<AddUser> {
 
   TextEditingController donorName = TextEditingController();
   TextEditingController donorPhone = TextEditingController();
-  void addDonor() {
+  Future addDonor()async {
     final add = {
       'name': donorName.text,
       'phone': donorPhone.text,
@@ -47,6 +49,7 @@ class _AddUserState extends State<AddUser> {
             Padding(
               padding: const EdgeInsets.all(8),
               child: TextField(
+                maxLength: 17,
                 controller: donorName,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -88,9 +91,11 @@ class _AddUserState extends State<AddUser> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {
-                  addDonor();
+                onPressed: ()async {
+                await  addDonor();
+                 await   Provider.of<DonorProvider>(context ,listen: false).reloading();
                   Navigator.pop(context);
+
                 },
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(redColor),

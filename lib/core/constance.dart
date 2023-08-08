@@ -8,6 +8,7 @@ const pinkColor = Colors.pink;
 const blackColor = Colors.black;
 const whiteColor = Colors.white;
 const orangeColor = Colors.orange;
+const blackshade = Color.fromARGB(255, 66, 65, 65);
 
 // text Styles
 

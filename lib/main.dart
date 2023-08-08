@@ -1,22 +1,29 @@
-import 'package:bload_groups/project_1/home.dart';
-import 'package:bload_groups/project_1/update.dart';
+import 'package:bload_groups/provider/home_page_prov.dart';
+import 'package:bload_groups/view/home.dart';
+import 'package:bload_groups/view/update.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
-Future<void> main() async {
+// Future<void> 
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => DonorProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'blood donation',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -24,10 +31,10 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-  routes: {
-    '/':(context) => HomePage(),
-    '/update':(context) => const UpdateUser()
-  },
+      routes: {
+        '/': (context) => HomePage(),
+        '/update': (context) => const UpdateUser()
+      },
     );
   }
 }

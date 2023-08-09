@@ -89,7 +89,7 @@
 //                           Column(
 //                             mainAxisAlignment: MainAxisAlignment.center,
 //                             children: [
-//                               Text(
+//                                                     Text(
 //                                 donorSnap['name'],
 //                                 style: const TextStyle(
 //                                   fontWeight: bold,

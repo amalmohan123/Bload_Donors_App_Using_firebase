@@ -43,11 +43,11 @@ class _UpdateUserState extends State<UpdateUser> {
         title: const Text(
           'Edit Details',
           style: TextStyle(
-            color: whiteColor,
-            fontWeight: bold,
+            color: ConstColor.whiteColor,
+            fontWeight:ConstStyle.bold,
           ),
         ),
-        backgroundColor: blueAccent,
+        backgroundColor: ConstColor.blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -98,14 +98,14 @@ class _UpdateUserState extends State<UpdateUser> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: ()async {
+                onPressed: () async {
                   updateDonor(docId);
-                   await Provider.of<DonorProvider>(context, listen: false)
+                  await Provider.of<DonorProvider>(context, listen: false)
                       .reloading();
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(blueAccent),
+                  backgroundColor: MaterialStatePropertyAll(ConstColor.blueAccent),
                   minimumSize: MaterialStatePropertyAll(
                     Size(double.infinity, 45),
                   ),
@@ -113,7 +113,7 @@ class _UpdateUserState extends State<UpdateUser> {
                 child: const Text(
                   'Update',
                   style: TextStyle(
-                      color: whiteColor, fontWeight: bold, fontSize: 18),
+                      color:ConstColor.whiteColor , fontWeight: ConstStyle.bold, fontSize: 18),
                 ),
               ),
             )

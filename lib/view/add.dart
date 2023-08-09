@@ -37,11 +37,11 @@ class _AddUserState extends State<AddUser> {
         title: const Text(
           'Add Donor',
           style: TextStyle(
-            color: whiteColor,
-            fontWeight: bold,
+            color:ConstColor.whiteColor ,
+            fontWeight: ConstStyle.bold,
           ),
         ),
-        backgroundColor: blueAccent,
+        backgroundColor: ConstColor.blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -99,7 +99,7 @@ class _AddUserState extends State<AddUser> {
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(blueAccent),
+                  backgroundColor: MaterialStatePropertyAll(ConstColor.blueAccent),
                   minimumSize: MaterialStatePropertyAll(
                     Size(double.infinity, 45),
                   ),
@@ -107,7 +107,7 @@ class _AddUserState extends State<AddUser> {
                 child: const Text(
                   'Submit',
                   style: TextStyle(
-                      color: whiteColor, fontWeight: bold, fontSize: 18),
+                      color:ConstColor.whiteColor, fontWeight:ConstStyle.bold, fontSize: 18),
                 ),
               ),
             )

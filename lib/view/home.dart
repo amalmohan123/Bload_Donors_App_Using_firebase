@@ -15,11 +15,11 @@ class HomePage extends StatelessWidget {
         title: const Text(
           'Blood Donation App',
           style: TextStyle(
-            color: whiteColor,
-            fontWeight: bold,
+            color: ConstColor.whiteColor,
+            fontWeight: ConstStyle.bold,
           ),
         ),
-        backgroundColor: blueAccent,
+        backgroundColor: ConstColor.blueAccent,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -29,10 +29,10 @@ class HomePage extends StatelessWidget {
             ),
           );
         },
-        backgroundColor: blueAccent,
+        backgroundColor: ConstColor.blueAccent,
         child: const Icon(
           Icons.add,
-          color: whiteColor,
+          color: ConstColor.whiteColor,
           size: 36,
         ),
       ),
@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
                         height: 80,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: whiteColor,
+                          color:ConstColor.lightBlue ,
                           boxShadow: const [
                             BoxShadow(
                                 color: Color.fromARGB(66, 72, 69, 69),
@@ -80,14 +80,14 @@ class HomePage extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CircleAvatar(
-                                  backgroundColor: blueAccent,
+                                  backgroundColor: ConstColor.blueAccent,
                                   radius: 32,
                                   child: Text(
                                     donorSnap['group'],
                                     style: const TextStyle(
-                                      fontWeight: bold,
+                                      fontWeight: ConstStyle.bold,
                                       fontSize: 25,
-                                      color: whiteColor,
+                                      color:ConstColor.whiteColor,
                                     ),
                                   ),
                                 ),
@@ -99,7 +99,7 @@ class HomePage extends StatelessWidget {
                                 Text(
                                   donorSnap['name'],
                                   style: const TextStyle(
-                                    fontWeight: bold,
+                                    fontWeight: ConstStyle.bold,
                                     fontSize: 18,
                                   ),
                                 ),
@@ -123,7 +123,7 @@ class HomePage extends StatelessWidget {
                                         });
                                   },
                                   icon: const Icon(Icons.edit),
-                                  color: blueColor,
+                                  color: ConstColor.blueColor,
                                 ),
                                 IconButton(
                                   onPressed: () {
@@ -155,7 +155,7 @@ class HomePage extends StatelessWidget {
                                     );
                                   },
                                   icon: const Icon(Icons.delete),
-                                  color: redColor,
+                                  color:ConstColor.redColor,
                                 ),
                               ],
                             ),

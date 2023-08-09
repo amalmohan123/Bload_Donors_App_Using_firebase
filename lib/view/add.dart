@@ -1,4 +1,5 @@
-import 'package:bload_groups/core/constance.dart';
+import 'package:bload_groups/helpers/colors.dart';
+import 'package:bload_groups/helpers/text_style.dart';
 import 'package:bload_groups/provider/home_page_prov.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _AddUserState extends State<AddUser> {
         title: const Text(
           'Add Donor',
           style: TextStyle(
-            color:ConstColor.whiteColor ,
+            color: ConstColor.whiteColor,
             fontWeight: ConstStyle.bold,
           ),
         ),
@@ -49,7 +50,7 @@ class _AddUserState extends State<AddUser> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8),
-              child: TextField(
+              child: TextFormField(
                 maxLength: 17,
                 controller: donorName,
                 decoration: const InputDecoration(
@@ -60,7 +61,7 @@ class _AddUserState extends State<AddUser> {
             ),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: TextField(
+              child: TextFormField(
                 controller: donorPhone,
                 keyboardType: TextInputType.number,
                 maxLength: 10,
@@ -68,6 +69,14 @@ class _AddUserState extends State<AddUser> {
                   border: OutlineInputBorder(),
                   label: Text('Phone Number'),
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter Number';
+                  } else if (value.length != 10) {
+                    return 'Enter Correct Number';
+                  }
+                  return null;
+                },
               ),
             ),
             Padding(
@@ -87,19 +96,33 @@ class _AddUserState extends State<AddUser> {
                 onChanged: (val) {
                   selectedGroups = val;
                 },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Select Blood Group";
+                  } else {
+                    return null;
+                  }
+                },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () async {
+
+                  
+
+
                   await addDonor();
+
+
                   await Provider.of<DonorProvider>(context, listen: false)
                       .reloading();
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(ConstColor.blueAccent),
+                  backgroundColor:
+                      MaterialStatePropertyAll(ConstColor.blueAccent),
                   minimumSize: MaterialStatePropertyAll(
                     Size(double.infinity, 45),
                   ),
@@ -107,7 +130,9 @@ class _AddUserState extends State<AddUser> {
                 child: const Text(
                   'Submit',
                   style: TextStyle(
-                      color:ConstColor.whiteColor, fontWeight:ConstStyle.bold, fontSize: 18),
+                      color: ConstColor.whiteColor,
+                      fontWeight: ConstStyle.bold,
+                      fontSize: 18),
                 ),
               ),
             )

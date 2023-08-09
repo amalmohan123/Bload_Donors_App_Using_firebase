@@ -2,7 +2,8 @@ import 'package:bload_groups/provider/home_page_prov.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../core/constance.dart';
+import '../helpers/colors.dart';
+import '../helpers/text_style.dart';
 import 'add.dart';
 
 class HomePage extends StatelessWidget {
@@ -55,22 +56,22 @@ class HomePage extends StatelessWidget {
               }
               return Consumer<DonorProvider>(
                 builder: (context, value, child) => ListView.builder(
-                  itemCount: donorProvider.donorList.length,
+                  itemCount: donorProvider.firebaseCollection.donorList.length,
                   itemBuilder: (context, index) {
                     final DocumentSnapshot donorSnap =
-                        donorProvider.donorList[index];
+                        donorProvider.firebaseCollection.donorList[index];
                     return Padding(
                       padding: const EdgeInsets.all(10),
                       child: Container(
                         height: 80,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color:ConstColor.lightBlue ,
+                          color: ConstColor.lightBlue,
                           boxShadow: const [
                             BoxShadow(
                                 color: Color.fromARGB(66, 72, 69, 69),
                                 blurRadius: 10,
-                                spreadRadius: 8)
+                                spreadRadius: 8),
                           ],
                         ),
                         child: Row(
@@ -87,7 +88,7 @@ class HomePage extends StatelessWidget {
                                     style: const TextStyle(
                                       fontWeight: ConstStyle.bold,
                                       fontSize: 25,
-                                      color:ConstColor.whiteColor,
+                                      color: ConstColor.whiteColor,
                                     ),
                                   ),
                                 ),
@@ -155,7 +156,7 @@ class HomePage extends StatelessWidget {
                                     );
                                   },
                                   icon: const Icon(Icons.delete),
-                                  color:ConstColor.redColor,
+                                  color: ConstColor.redColor,
                                 ),
                               ],
                             ),

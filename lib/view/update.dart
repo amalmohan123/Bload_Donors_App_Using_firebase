@@ -1,4 +1,5 @@
-import 'package:bload_groups/core/constance.dart';
+import 'package:bload_groups/helpers/colors.dart';
+import 'package:bload_groups/helpers/text_style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

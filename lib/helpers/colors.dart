@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 //   Colors
-
 class ConstColor{
+
 
 static const redColor = Colors.red;
 static const blueColor = Color.fromARGB(255, 69, 19, 220);
@@ -15,12 +15,4 @@ static const blueAccent = Colors.blueAccent;
 static const greenColor = Colors.green;
 }
 
-
-
-// text Styles
-class ConstStyle{
-static const bold = FontWeight.bold;
-
-  
-}
 

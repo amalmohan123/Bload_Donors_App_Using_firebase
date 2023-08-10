@@ -3,6 +3,7 @@ import 'package:bload_groups/helpers/text_style.dart';
 import 'package:bload_groups/provider/home_page_prov.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddUser extends StatefulWidget {
@@ -21,6 +22,8 @@ class _AddUserState extends State<AddUser> {
 
   TextEditingController donorName = TextEditingController();
   TextEditingController donorPhone = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
 
   Future addDonor() async {
     final add = {
@@ -46,99 +49,120 @@ class _AddUserState extends State<AddUser> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                maxLength: 17,
-                controller: donorName,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  label: Text("Donor's Name"),
+        child: Form(
+          // autovalidateMode: AutovalidateMode.always,
+          key: formKey,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  maxLength: 17,
+                  controller: donorName,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    label: Text("Donor's Name"),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter The Name';
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Enter The Name';
-                  } else {
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextFormField(
+                  controller: donorPhone,
+                  keyboardType: TextInputType.number,
+                  maxLength: 10,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'[0-9]'),
+                    ),
+                  ],
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    label: Text('Phone Number'),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter Number';
+                    } else if (value.length != 9) {
+                      return 'Enter Correct Number';
+                    }
                     return null;
-                  }
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                controller: donorPhone,
-                keyboardType: TextInputType.number,
-                maxLength: 10,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  label: Text('Phone Number'),
+                  },
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Enter Number';
-                  } else if (value.length != 10) {
-                    return 'Enter Correct Number';
-                  }
-                  return null;
-                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownButtonFormField(
-                decoration: const InputDecoration(
-                  label: Text('Select Blood Group'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    label: Text('Select Blood Group'),
+                  ),
+                  items: bloodGroups
+                      .map(
+                        (e) => DropdownMenuItem(
+                          child: Text(e),
+                          value: e,
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (val) {
+                    selectedGroups = val;
+                  },
+                  validator: (value1) {
+                    if (value1 == null) {
+                      return "Select Blood Group";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
-                items: bloodGroups
-                    .map(
-                      (e) => DropdownMenuItem(
-                        child: Text(e),
-                        value: e,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      await addDonor();
+                      await Provider.of<DonorProvider>(context, listen: false)
+                          .reloading();
+                      Navigator.pop(context);
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        duration: Duration(seconds: 2),
+                        backgroundColor: ConstColor.greenColor,
+                        behavior: SnackBarBehavior.floating,
+                        content: Text(
+                          'Add Successfully ',
+                          style: TextStyle(fontWeight: ConstStyle.bold),
+                        ),
                       ),
-                    )
-                    .toList(),
-                onChanged: (val) {
-                  selectedGroups = val;
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Select Blood Group";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  await addDonor();
-
-                  await Provider.of<DonorProvider>(context, listen: false)
-                      .reloading();
-                  Navigator.pop(context);
-                },
-                style: const ButtonStyle(
-                  backgroundColor:
-                      MaterialStatePropertyAll(ConstColor.blueAccent),
-                  minimumSize: MaterialStatePropertyAll(
-                    Size(double.infinity, 45),
+                    );
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(ConstColor.blueAccent),
+                    minimumSize: MaterialStatePropertyAll(
+                      Size(double.infinity, 45),
+                    ),
+                  ),
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                        color: ConstColor.whiteColor,
+                        fontWeight: ConstStyle.bold,
+                        fontSize: 18),
                   ),
                 ),
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                      color: ConstColor.whiteColor,
-                      fontWeight: ConstStyle.bold,
-                      fontSize: 18),
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

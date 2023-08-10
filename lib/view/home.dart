@@ -48,10 +48,9 @@ class HomePage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-
-              if (snapshot.hasError) {
+              else if(snapshot.hasError) {
                 return const Center(
-                  child: Text('Error fetching donors'),
+                  child: Text('Error While getting Data'),
                 );
               }
               return Consumer<DonorProvider>(

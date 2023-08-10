@@ -57,6 +57,13 @@ class _AddUserState extends State<AddUser> {
                   border: OutlineInputBorder(),
                   label: Text("Donor's Name"),
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter The Name';
+                  } else {
+                    return null;
+                  }
+                },
               ),
             ),
             Padding(
@@ -109,12 +116,7 @@ class _AddUserState extends State<AddUser> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () async {
-
-                  
-
-
                   await addDonor();
-
 
                   await Provider.of<DonorProvider>(context, listen: false)
                       .reloading();

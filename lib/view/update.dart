@@ -45,7 +45,7 @@ class _UpdateUserState extends State<UpdateUser> {
           'Edit Details',
           style: TextStyle(
             color: ConstColor.whiteColor,
-            fontWeight:ConstStyle.bold,
+            fontWeight: ConstStyle.bold,
           ),
         ),
         backgroundColor: ConstColor.blueAccent,
@@ -56,17 +56,24 @@ class _UpdateUserState extends State<UpdateUser> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8),
-              child: TextField(
+              child: TextFormField(
                 controller: donorName,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text("Donor's Name"),
                 ),
+                validator: (value) {
+                  if(value!.isEmpty){
+                    return "Enter The Name";
+                  }else{
+                    return null;
+                  }
+                },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: TextField(
+              child: TextFormField(
                 controller: donorPhone,
                 keyboardType: TextInputType.number,
                 maxLength: 10,
@@ -74,6 +81,15 @@ class _UpdateUserState extends State<UpdateUser> {
                   border: OutlineInputBorder(),
                   label: Text('Phone Number'),
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter Number ";
+                  } else if (value.length != 10) {
+                    return 'Enter Currect Number';
+                  } else {
+                    return null;
+                  }
+                },
               ),
             ),
             Padding(
@@ -94,6 +110,13 @@ class _UpdateUserState extends State<UpdateUser> {
                 onChanged: (val) {
                   selectedGroups = val;
                 },
+                validator: (value) {
+                  if(value!.isEmpty){
+                    return 'Select Blood Group';
+                  }else{
+                    return null;
+                  }
+                },
               ),
             ),
             Padding(
@@ -106,7 +129,8 @@ class _UpdateUserState extends State<UpdateUser> {
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(ConstColor.blueAccent),
+                  backgroundColor:
+                      MaterialStatePropertyAll(ConstColor.blueAccent),
                   minimumSize: MaterialStatePropertyAll(
                     Size(double.infinity, 45),
                   ),
@@ -114,7 +138,9 @@ class _UpdateUserState extends State<UpdateUser> {
                 child: const Text(
                   'Update',
                   style: TextStyle(
-                      color:ConstColor.whiteColor , fontWeight: ConstStyle.bold, fontSize: 18),
+                      color: ConstColor.whiteColor,
+                      fontWeight: ConstStyle.bold,
+                      fontSize: 18),
                 ),
               ),
             )

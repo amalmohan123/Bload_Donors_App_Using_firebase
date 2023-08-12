@@ -4,10 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../helpers/colors.dart';
 import '../helpers/text_style.dart';
+import '../servises/network/network.dart';
 import 'add.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool internetAvailable = true;
+
+  @override
+  void initState() {
+    super.initState();
+    checkInternetStatus();
+  }
+
+  Future<void> checkInternetStatus() async {
+    final isAvailable = await NetworkStatusChecker.isInternetAvailable();
+    setState(() {
+      internetAvailable = isAvailable;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +59,10 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Consumer<DonorProvider>(
+      body: 
+      // internetAvailable,
+      
+       Consumer<DonorProvider>(
         builder: (context, donorProvider, _) {
           return FutureBuilder(
             future: donorProvider.fetchDonors(),
@@ -47,8 +71,7 @@ class HomePage extends StatelessWidget {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              }
-              else if(snapshot.hasError) {
+              } else if (snapshot.hasError) {
                 return const Center(
                   child: Text('Error While getting Data'),
                 );

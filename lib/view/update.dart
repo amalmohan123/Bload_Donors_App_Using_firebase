@@ -22,7 +22,7 @@ class _UpdateUserState extends State<UpdateUser> {
 
   TextEditingController donorName = TextEditingController();
   TextEditingController donorPhone = TextEditingController();
-  final formKey=GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   void updateDonor(docid) {
     final data = {
@@ -81,7 +81,9 @@ class _UpdateUserState extends State<UpdateUser> {
                 child: TextFormField(
                   controller: donorPhone,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                  ],
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text('Phone Number'),
@@ -129,18 +131,21 @@ class _UpdateUserState extends State<UpdateUser> {
                 child: ElevatedButton(
                   onPressed: () async {
                     ScaffoldMessenger.of(context).showSnackBar(
-                       const SnackBar(
-                        content: Text('Edit Successful',),
+                      const SnackBar(
+                        content: Text(
+                          'Edit Successful',
+                          style: TextStyle(fontWeight: ConstStyle.bold),
+                        ),
                         duration: Duration(seconds: 2),
-                        behavior:SnackBarBehavior.floating ,
+                        backgroundColor: ConstColor.greenColor,
+                        behavior: SnackBarBehavior.floating,
                       ),
                     );
-                    if(formKey.currentState!.validate()){
-                    updateDonor(docId);
-                    await Provider.of<DonorProvider>(context, listen: false)
-                        .reloading();
-                    Navigator.pop(context);
-
+                    if (formKey.currentState!.validate()) {
+                      updateDonor(docId);
+                      await Provider.of<DonorProvider>(context, listen: false)
+                          .reloading();
+                      Navigator.pop(context);
                     }
                   },
                   style: const ButtonStyle(

@@ -78,11 +78,7 @@ class _AddUserState extends State<AddUser> {
                   controller: donorPhone,
                   keyboardType: TextInputType.number,
                   maxLength: 10,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'[0-9]'),
-                    ),
-                  ],
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text('Phone Number'),
@@ -90,7 +86,7 @@ class _AddUserState extends State<AddUser> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Enter Number';
-                    } else if (value.length != 9) {
+                    } else if (value.length != 10) {
                       return 'Enter Correct Number';
                     }
                     return null;
@@ -127,12 +123,6 @@ class _AddUserState extends State<AddUser> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      await addDonor();
-                      await Provider.of<DonorProvider>(context, listen: false)
-                          .reloading();
-                      Navigator.pop(context);
-                    }
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         duration: Duration(seconds: 2),
@@ -144,6 +134,12 @@ class _AddUserState extends State<AddUser> {
                         ),
                       ),
                     );
+                    if (formKey.currentState!.validate()) {
+                      await addDonor();
+                      await Provider.of<DonorProvider>(context, listen: false)
+                          .reloading();
+                      Navigator.pop(context);
+                    }
                   },
                   style: const ButtonStyle(
                     backgroundColor:

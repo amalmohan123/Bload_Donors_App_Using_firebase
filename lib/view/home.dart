@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   bool internetAvailable = true;
 
   @override
@@ -59,10 +60,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: 
-      // internetAvailable,
-      
-       Consumer<DonorProvider>(
+      body:
+          // internetAvailable,
+
+          Consumer<DonorProvider>(
         builder: (context, donorProvider, _) {
           return FutureBuilder(
             future: donorProvider.fetchDonors(),
@@ -70,12 +71,16 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
+                  
+
                 );
               } else if (snapshot.hasError) {
+               
+                  internetAvailable;
                 return const Center(
                   child: Text('Error While getting Data'),
-                );
-              }
+                  );
+                }
               return Consumer<DonorProvider>(
                 builder: (context, value, child) => ListView.builder(
                   itemCount: donorProvider.firebaseCollection.donorList.length,
@@ -136,14 +141,16 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/update',
-                                        arguments: {
-                                          'name': donorSnap['name'],
-                                          'phone':
-                                              donorSnap['phone'].toString(),
-                                          'group': donorSnap['group'],
-                                          'id': donorSnap.id,
-                                        });
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/update',
+                                      arguments: {
+                                        'name': donorSnap['name'],
+                                        'phone': donorSnap['phone'].toString(),
+                                        'group': donorSnap['group'],
+                                        'id': donorSnap.id,
+                                      },
+                                    );
                                   },
                                   icon: const Icon(Icons.edit),
                                   color: ConstColor.blueColor,

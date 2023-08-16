@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:bload_groups/provider/home_page_prov.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import '../helpers/colors.dart';
 import '../helpers/text_style.dart';
-import '../servises/network/network.dart';
+
 import 'add.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,20 +20,67 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
-  bool internetAvailable = true;
+
+
+  late StreamSubscription subscription;
+
+  var isDeviceConnected = false;
+
+  bool isAlertSet = false;
 
   @override
   void initState() {
     super.initState();
-    checkInternetStatus();
+    getConnectivity();
   }
 
-  Future<void> checkInternetStatus() async {
-    final isAvailable = await NetworkStatusChecker.isInternetAvailable();
-    setState(() {
-      internetAvailable = isAvailable;
+  getConnectivity() {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) async {
+      isDeviceConnected = await InternetConnectionChecker().hasConnection;
+
+      if (!isDeviceConnected && isAlertSet == false) {
+        showDialogBox();
+        setState(() {
+          isAlertSet = true;
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    subscription.cancel();
+  }
+
+  showDialogBox() {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text("No Connection"),
+        content: const Text("Please check your internet connectivity"),
+        actions: <Widget>[
+          TextButton(
+              onPressed: () async {
+                Navigator.pop(context, 'Cancel');
+                setState(() {
+                  isAlertSet = false;
+                });
+                isDeviceConnected =
+                    await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected) {
+                  showDialogBox();
+                  setState(() {
+                    isAlertSet = true;
+                  });
+                }
+              },
+              child: const Text('OK'))
+        ],
+      ),
+    );
   }
 
   @override
@@ -60,10 +112,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body:
-          // internetAvailable,
-
-          Consumer<DonorProvider>(
+      body: Consumer<DonorProvider>(
         builder: (context, donorProvider, _) {
           return FutureBuilder(
             future: donorProvider.fetchDonors(),
@@ -71,16 +120,9 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
-                  
-
                 );
-              } else if (snapshot.hasError) {
-               
-                  internetAvailable;
-                return const Center(
-                  child: Text('Error While getting Data'),
-                  );
-                }
+              }
+
               return Consumer<DonorProvider>(
                 builder: (context, value, child) => ListView.builder(
                   itemCount: donorProvider.firebaseCollection.donorList.length,
